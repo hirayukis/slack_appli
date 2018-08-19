@@ -1,45 +1,45 @@
 class Slacker(object):
     """The summary of the class
-    the class send messege to slack
+    the class send message to slack
     Args:
         incoming_webhook_url (str): slack_incoming_webhook_url
         slack_token (str): slack_token
     Attributes:
         None
     Methods:
-        slack_messenger: to send messege
+        slack_messenger: to send message
         get_slack_members_id_dict: get slack members id as a dictionary type
     """
     def __init__(self, incoming_webhook_url, slack_token):
         self._webhook_url = incoming_webhook_url
         self._slack_token = slack_token
 
-    def slack_messenger(self, main_messege, channel, user_name, icon_emoji, attachments=None, mention_members=[], 
+    def slack_messenger(self, main_message, channel, user_name, icon_emoji, attachments=None, mention_members=[], 
                         is_link_name=1, at_here=False, at_channel=False):
         """The summary line
-        This method send a messege to slack.
+        This method send a message to slack.
         Args:
             webhook_url (str): webhook_url of your slack channel
-            main_messege (str): you can use markdown. if you want mantion, <@userID> or <!here>
-            channel (str): the channel whichi you want to send a messege
-            user_name (str): the name who send a messege
-            icon_emoji (str): the image who send a messege
+            main_message (str): you can use markdown. if you want mantion, <@userID> or <!here>
+            channel (str): the channel whichi you want to send a message
+            user_name (str): the name who send a message
+            icon_emoji (str): the image who send a message
             is_link_name (int): if 1, channel name links the channel (examle: #general)
             mention_members (list of str): who you want to mention. you can choose many people.
-            at_here (bool): if true, a messege mention @here automatically
-            at_channel (bool): if true, a messege mention @channel automatically
+            at_here (bool): if true, a message mention @here automatically
+            at_channel (bool): if true, a message mention @channel automatically
         Returns:
             None
         """ 
         if len(mention_members) > 0:
             mention_text = self.mention_text_creater(mention_members)
-            main_messege += mention_text
+            main_message += mention_text
         if at_here:
-            main_messege += "<!here>"
+            main_message += "<!here>"
         if at_channel:
-            main_messege += "<!channel>"
+            main_message += "<!channel>"
         payload = json.dumps({
-            'text': main_messege,
+            'text': main_message,
             'channel': channel,
             'username': user_name,
             'icon_emoji': icon_emoji,
@@ -69,7 +69,7 @@ class Slacker(object):
     def mention_text_creater(self, mention_members):
         """The summary line
         This method create text for mention
-        It insert main_messege
+        It insert main_message
         This text format follows slack format rules
         Args:
             mention_menvers (list of str): who you want to mention. you can choose many people.
@@ -103,7 +103,7 @@ class Slacker(object):
             actions (list of json): Button and Select. you can make responsive action. (but not yet)
             image_url (str): a image url to send slack (max width:360px, max height:500px)
             thumb_url (str): a image url places thumbnail on the right side of a message (max width height 75px)
-            footer (str): footer messege
+            footer (str): footer message
             footer_icon (str): a image url of footer icon (max width height 16px)
             ts (int): epoch time
         Returns:
